@@ -1,7 +1,11 @@
 package hmar.eb.mil.br.sat.modelo;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,26 +22,22 @@ public class Pessoa {
     private String nome;
     private String nomeGuerra;
     private String endereco;
-    private String Percurso;
+    private String percurso;
     @ManyToOne
     private Cota cota;
+    @OneToMany(mappedBy = "pessoa")
+    private List<Trajeto> trajetos = new ArrayList<>();
 
     public Pessoa() {
         super();
     }
 
-    public Pessoa(Long cod, String tipo, String graduacao, String turma, Integer ano, BigInteger preccp, String nome, String nomeGuerra, String endereco, String percurso, Cota cota) {
-        this.cod = cod;
-        this.tipo = tipo;
-        this.graduacao = graduacao;
-        this.turma = turma;
-        this.ano = ano;
-        this.preccp = preccp;
-        this.nome = nome;
-        this.nomeGuerra = nomeGuerra;
-        this.endereco = endereco;
-        Percurso = percurso;
-        this.cota = cota;
+    public List<Trajeto> getTrajetos() {
+        return trajetos;
+    }
+
+    public void setTrajetos(List<Trajeto> trajetos) {
+        this.trajetos = trajetos;
     }
 
     @Override
@@ -45,12 +45,12 @@ public class Pessoa {
         if (this == o) return true;
         if (!(o instanceof Pessoa)) return false;
         Pessoa pessoa = (Pessoa) o;
-        return Objects.equals(cod, pessoa.cod) && Objects.equals(tipo, pessoa.tipo) && Objects.equals(graduacao, pessoa.graduacao) && Objects.equals(turma, pessoa.turma) && Objects.equals(ano, pessoa.ano) && Objects.equals(preccp, pessoa.preccp) && Objects.equals(nome, pessoa.nome) && Objects.equals(nomeGuerra, pessoa.nomeGuerra) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(Percurso, pessoa.Percurso) && Objects.equals(cota, pessoa.cota);
+        return Objects.equals(cod, pessoa.cod) && Objects.equals(tipo, pessoa.tipo) && Objects.equals(graduacao, pessoa.graduacao) && Objects.equals(turma, pessoa.turma) && Objects.equals(ano, pessoa.ano) && Objects.equals(preccp, pessoa.preccp) && Objects.equals(nome, pessoa.nome) && Objects.equals(nomeGuerra, pessoa.nomeGuerra) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(percurso, pessoa.percurso) && Objects.equals(cota, pessoa.cota);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cod, tipo, graduacao, turma, ano, preccp, nome, nomeGuerra, endereco, Percurso, cota);
+        return Objects.hash(cod, tipo, graduacao, turma, ano, preccp, nome, nomeGuerra, endereco, percurso, cota);
     }
 
     public Long getCod() {
@@ -126,11 +126,11 @@ public class Pessoa {
     }
 
     public String getPercurso() {
-        return Percurso;
+        return percurso;
     }
 
     public void setPercurso(String percurso) {
-        Percurso = percurso;
+        percurso = percurso;
     }
 
     public Cota getCota() {

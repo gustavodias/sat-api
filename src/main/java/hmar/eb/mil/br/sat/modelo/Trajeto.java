@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class Trageto {
+public class Trajeto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +17,11 @@ public class Trageto {
     @ManyToOne
     private Passagem passagem;
 
-    public Trageto() {
+    public Trajeto() {
         super();
     }
 
-    public Trageto(Long cod, String descricao, Pessoa pessoa, Passagem passagem) {
+    public Trajeto(Long cod, String descricao, Pessoa pessoa, Passagem passagem) {
         this.cod = cod;
         this.descricao = descricao;
         this.pessoa = pessoa;
@@ -31,9 +31,9 @@ public class Trageto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Trageto)) return false;
-        Trageto trageto = (Trageto) o;
-        return Objects.equals(cod, trageto.cod) && Objects.equals(descricao, trageto.descricao) && Objects.equals(data, trageto.data) && Objects.equals(pessoa, trageto.pessoa) && Objects.equals(passagem, trageto.passagem);
+        if (!(o instanceof Trajeto)) return false;
+        Trajeto trajeto = (Trajeto) o;
+        return Objects.equals(cod, trajeto.cod) && Objects.equals(descricao, trajeto.descricao) && Objects.equals(data, trajeto.data) && Objects.equals(pessoa, trajeto.pessoa) && Objects.equals(passagem, trajeto.passagem);
     }
 
     @Override
