@@ -1,9 +1,6 @@
 package hmar.eb.mil.br.sat.modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -18,13 +15,25 @@ public class Cota {
     private BigDecimal valor;
     private LocalDateTime data = LocalDateTime.now();
 
+    @ManyToOne
+    private Pessoa pessoa;
+
     public Cota() {
         super();
     }
 
-    public Cota(String graduacao, BigDecimal valor) {
+    public Cota(String graduacao, BigDecimal valor, Pessoa pessoa) {
         this.graduacao = graduacao;
         this.valor = valor;
+        this.pessoa = pessoa;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
     @Override

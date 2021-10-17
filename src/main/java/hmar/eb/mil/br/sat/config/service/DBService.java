@@ -26,9 +26,7 @@ public class DBService {
     }
 
     public void instaciaBaseDeDados() {
-        Cota cota1 = new Cota("SD EP", new BigDecimal("20"));
-        Cota cota2 = new Cota("CB EP", new BigDecimal("30"));
-        Cota cota3 = new Cota("SGT EP", new BigDecimal("40"));
+
 
         Empresa emp1 = new Empresa("MOBI PE");
         Empresa emp2 = new Empresa("RODOTUR");
@@ -39,11 +37,16 @@ public class DBService {
         Passagem pas3 = new Passagem("G", new BigDecimal("2.45"));
 
         Pessoa pes1 = new Pessoa("MILITAR", "SGT EP", "ALPHA", 2017, new BigInteger("123456789100"), "GUSTAVO EMERSON F. DIAS",
-                "DIAS", "Rua 25", "CAMARAGIBE/RECIFE", cota3);
+                "DIAS", "Rua 25", "CAMARAGIBE/RECIFE");
         Pessoa pes2 = new Pessoa("CIVIL", "SD EP", "BRAVO", 2018, new BigInteger("123456789900"), "JOÃO TESTER",
-                "TESTER", "Rua 27", "OLINDA/RECIFE", cota1);
+                "TESTER", "Rua 27", "OLINDA/RECIFE");
         Pessoa pes3 = new Pessoa("MILITAR", "CP EP", "ALPHA", 2019, new BigInteger("123456789800"), "PEDRO TESTER DIAS",
-                "PEDRO", "Rua 25", "RECIFE/RECIFE", cota2);
+                "PEDRO", "Rua 25", "RECIFE/RECIFE");
+
+        Cota cota1 = new Cota("SD EP", new BigDecimal("20"), pes2);
+        Cota cota2 = new Cota("CB EP", new BigDecimal("30"), pes3);
+        Cota cota3 = new Cota("SGT EP", new BigDecimal("40"), pes1);
+
 
         Trajeto tr1 = new Trajeto("Rua x/Rua Y", pes1, pas1);
         Trajeto tr2 = new Trajeto("Rua y/Rua z", pes1, pas1);
@@ -55,14 +58,19 @@ public class DBService {
         Trajeto tr8 = new Trajeto("Rua k/Rua l", pes3, pas1);
         Trajeto tr9 = new Trajeto("Rua l/Rua Y", pes3, pas1);
 
+        pes1.getCotas().addAll(Arrays.asList(cota3));
+        pes2.getCotas().addAll(Arrays.asList(cota1));
+        pes3.getCotas().addAll(Arrays.asList(cota2));
+
         pes1.getTrajetos().addAll(Arrays.asList(tr1,tr2));
         pes2.getTrajetos().addAll(Arrays.asList(tr3,tr4,tr5));
         pes3.getTrajetos().addAll(Arrays.asList(tr6,tr7,tr8,tr9));
 
-        this.cotaRepository.saveAll(Arrays.asList(cota1, cota2, cota3));
+
         this.empresaRepository.saveAll(Arrays.asList(emp1, emp2, emp3));
         this.passagemRepository.saveAll(Arrays.asList(pas1, pas2, pas3));
         this.pessoaRepository.saveAll(Arrays.asList(pes1,pes2,pes3));
+        this.cotaRepository.saveAll(Arrays.asList(cota1, cota2, cota3));
         this.trajetoRepository.saveAll(Arrays.asList(tr1,tr2,tr3,tr4,tr5,tr6,tr7,tr8,tr9));
     }
 

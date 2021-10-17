@@ -13,6 +13,7 @@ public class CotaDto {
     private BigDecimal valor;
     private LocalDateTime data;
 
+
     public CotaDto(Cota cota) {
         this.cod = cota.getCod();
         this.graduacao = cota.getGraduacao();

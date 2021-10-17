@@ -21,8 +21,8 @@ public class Pessoa {
     private String nomeGuerra;
     private String endereco;
     private String percurso;
-    @ManyToOne
-    private Cota cota;
+    @OneToMany(mappedBy = "pessoa")
+    private List<Cota> cotas = new ArrayList<>();
     @OneToMany(mappedBy = "pessoa")
     private List<Trajeto> trajetos = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class Pessoa {
         super();
     }
 
-    public Pessoa(String tipo, String graduacao, String turma, Integer ano, BigInteger preccp, String nome, String nomeGuerra, String endereco, String percurso, Cota cota) {
+    public Pessoa(String tipo, String graduacao, String turma, Integer ano, BigInteger preccp, String nome, String nomeGuerra, String endereco, String percurso) {
         this.tipo = tipo;
         this.graduacao = graduacao;
         this.turma = turma;
@@ -40,7 +40,14 @@ public class Pessoa {
         this.nomeGuerra = nomeGuerra;
         this.endereco = endereco;
         this.percurso = percurso;
-        this.cota = cota;
+    }
+
+    public List<Cota> getCotas() {
+        return cotas;
+    }
+
+    public void setCotas(List<Cota> cotas) {
+        this.cotas = cotas;
     }
 
     public List<Trajeto> getTrajetos() {
@@ -56,12 +63,12 @@ public class Pessoa {
         if (this == o) return true;
         if (!(o instanceof Pessoa)) return false;
         Pessoa pessoa = (Pessoa) o;
-        return Objects.equals(cod, pessoa.cod) && Objects.equals(tipo, pessoa.tipo) && Objects.equals(graduacao, pessoa.graduacao) && Objects.equals(turma, pessoa.turma) && Objects.equals(ano, pessoa.ano) && Objects.equals(preccp, pessoa.preccp) && Objects.equals(nome, pessoa.nome) && Objects.equals(nomeGuerra, pessoa.nomeGuerra) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(percurso, pessoa.percurso) && Objects.equals(cota, pessoa.cota);
+        return Objects.equals(cod, pessoa.cod) && Objects.equals(tipo, pessoa.tipo) && Objects.equals(graduacao, pessoa.graduacao) && Objects.equals(turma, pessoa.turma) && Objects.equals(ano, pessoa.ano) && Objects.equals(preccp, pessoa.preccp) && Objects.equals(nome, pessoa.nome) && Objects.equals(nomeGuerra, pessoa.nomeGuerra) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(percurso, pessoa.percurso);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cod, tipo, graduacao, turma, ano, preccp, nome, nomeGuerra, endereco, percurso, cota);
+        return Objects.hash(cod, tipo, graduacao, turma, ano, preccp, nome, nomeGuerra, endereco, percurso);
     }
 
     public Long getCod() {
@@ -142,13 +149,5 @@ public class Pessoa {
 
     public void setPercurso(String percurso) {
         this.percurso = percurso;
-    }
-
-    public Cota getCota() {
-        return cota;
-    }
-
-    public void setCota(Cota cota) {
-        this.cota = cota;
     }
 }
