@@ -1,6 +1,6 @@
 package hmar.eb.mil.br.sat.config;
 
-import hmar.eb.mil.br.sat.config.security.DBService;
+import hmar.eb.mil.br.sat.config.service.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package hmar.eb.mil.br.sat.config.security;
+package hmar.eb.mil.br.sat.config.service;
 
 import hmar.eb.mil.br.sat.modelo.*;
 import hmar.eb.mil.br.sat.repository.*;
