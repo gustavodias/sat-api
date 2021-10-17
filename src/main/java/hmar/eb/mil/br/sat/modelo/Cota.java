@@ -22,8 +22,7 @@ public class Cota {
         super();
     }
 
-    public Cota(Long cod, String graduacao, BigDecimal valor) {
-        this.cod = cod;
+    public Cota(String graduacao, BigDecimal valor) {
         this.graduacao = graduacao;
         this.valor = valor;
     }

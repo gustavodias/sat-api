@@ -1,7 +1,5 @@
 package hmar.eb.mil.br.sat.modelo;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -30,6 +28,19 @@ public class Pessoa {
 
     public Pessoa() {
         super();
+    }
+
+    public Pessoa(String tipo, String graduacao, String turma, Integer ano, BigInteger preccp, String nome, String nomeGuerra, String endereco, String percurso, Cota cota) {
+        this.tipo = tipo;
+        this.graduacao = graduacao;
+        this.turma = turma;
+        this.ano = ano;
+        this.preccp = preccp;
+        this.nome = nome;
+        this.nomeGuerra = nomeGuerra;
+        this.endereco = endereco;
+        this.percurso = percurso;
+        this.cota = cota;
     }
 
     public List<Trajeto> getTrajetos() {
@@ -130,7 +141,7 @@ public class Pessoa {
     }
 
     public void setPercurso(String percurso) {
-        percurso = percurso;
+        this.percurso = percurso;
     }
 
     public Cota getCota() {

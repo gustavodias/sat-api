@@ -21,8 +21,7 @@ public class Trajeto {
         super();
     }
 
-    public Trajeto(Long cod, String descricao, Pessoa pessoa, Passagem passagem) {
-        this.cod = cod;
+    public Trajeto(String descricao, Pessoa pessoa, Passagem passagem) {
         this.descricao = descricao;
         this.pessoa = pessoa;
         this.passagem = passagem;

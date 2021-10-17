@@ -18,8 +18,7 @@ public class Empresa {
         super();
     }
 
-    public Empresa(Long cod, String nome) {
-        this.cod = cod;
+    public Empresa(String nome) {
         this.nome = nome;
     }
 

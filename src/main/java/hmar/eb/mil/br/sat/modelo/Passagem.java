@@ -22,8 +22,7 @@ public class Passagem {
         super();
     }
 
-    public Passagem(Long cod, String tarifa, BigDecimal valor) {
-        this.cod = cod;
+    public Passagem(String tarifa, BigDecimal valor) {
         this.tarifa = tarifa;
         this.valor = valor;
     }
