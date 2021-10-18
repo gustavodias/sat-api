@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/cota")
@@ -46,10 +47,10 @@ public class CotaController {
     @Transactional
     @CacheEvict(value = "listaDeCotas")
     public ResponseEntity<CotaDto> cadastrar(@RequestBody @Valid CotaForm cotaForm, UriComponentsBuilder uriBuilder){
-            var cota = cotaForm.converter(pessoaRepository);
+            Cota cota = cotaForm.converter(pessoaRepository);
             cotaRepository.save(cota);
 
-            var uri = uriBuilder.path("/{id}").buildAndExpand(cota.getCod()).toUri();
-            return ResponseEntity.created(uri).body(new CotaDto(cota));
+        URI uri = uriBuilder.path("/{id}").buildAndExpand(cota.getCod()).toUri();
+        return ResponseEntity.created(uri).body(new CotaDto(cota));
     }
 }

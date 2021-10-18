@@ -11,21 +11,25 @@ import java.math.BigDecimal;
 public class CotaForm {
     @NotNull @NotEmpty
     private String graduacao;
-    @NotNull @NotEmpty
-    private String valor;
-    @NotNull @NotEmpty
+    @NotNull
+    private BigDecimal valor;
+    @NotNull
     private Long codPessoa;
 
     public Cota converter(PessoaRepository pessoaRepository){
         Pessoa pessoa = pessoaRepository.getById(codPessoa);
-        return new Cota(graduacao, new BigDecimal(valor), pessoa);
+        return new Cota(graduacao, valor, pessoa);
+    }
+
+    public Long getCodPessoa() {
+        return codPessoa;
     }
 
     public String getGraduacao() {
         return graduacao;
     }
 
-    public String getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 }
