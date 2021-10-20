@@ -1,7 +1,8 @@
 package hmar.eb.mil.br.sat.controller;
 
 import hmar.eb.mil.br.sat.controller.dto.CotaDto;
-import hmar.eb.mil.br.sat.controller.form.CotaForm;
+import hmar.eb.mil.br.sat.controller.form.cota.AtualizarCotaForm;
+import hmar.eb.mil.br.sat.controller.form.cota.CotaForm;
 import hmar.eb.mil.br.sat.modelo.Cota;
 import hmar.eb.mil.br.sat.repository.CotaRepository;
 import hmar.eb.mil.br.sat.repository.PessoaRepository;
@@ -51,5 +52,30 @@ public class CotaController {
 
             var uri = uriBuilder.path("/{id}").buildAndExpand(cota.getCod()).toUri();
             return ResponseEntity.created(uri).body(new CotaDto(cota));
+    }
+
+    @PutMapping("/{cod}")
+    @Transactional
+    @CacheEvict(value = "listaDeCotas", allEntries = true)
+    public ResponseEntity<CotaDto> atualizar(@PathVariable Long cod, @RequestBody @Valid AtualizarCotaForm atualizarCotaForm){
+        var optional = cotaRepository.findById(cod);
+        System.out.println("passou" + cod);
+        if (optional.isPresent()){
+            var cota = atualizarCotaForm.atualizar(cod, cotaRepository);
+            return ResponseEntity.ok(new CotaDto(cota));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{cod}")
+    @Transactional
+    @CacheEvict(value = "listaDeCotas", allEntries = true)
+    public ResponseEntity<Void> remover(@PathVariable Long cod){
+        var optional = cotaRepository.findById(cod);
+        if (optional.isPresent()){
+            cotaRepository.deleteById(cod);
+            return  ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

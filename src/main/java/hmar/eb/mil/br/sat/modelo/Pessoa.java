@@ -21,6 +21,8 @@ public class Pessoa {
     private String nomeGuerra;
     private String endereco;
     private String percurso;
+    @ManyToOne
+    private Empresa empresa;
     @OneToMany(mappedBy = "pessoa")
     private List<Cota> cotas = new ArrayList<>();
     @OneToMany(mappedBy = "pessoa")
@@ -30,7 +32,7 @@ public class Pessoa {
         super();
     }
 
-    public Pessoa(String tipo, String graduacao, String turma, Integer ano, BigInteger preccp, String nome, String nomeGuerra, String endereco, String percurso) {
+    public Pessoa(String tipo, String graduacao, String turma, Integer ano, BigInteger preccp, String nome, String nomeGuerra, String endereco, String percurso, Empresa empresa) {
         this.tipo = tipo;
         this.graduacao = graduacao;
         this.turma = turma;
@@ -40,6 +42,7 @@ public class Pessoa {
         this.nomeGuerra = nomeGuerra;
         this.endereco = endereco;
         this.percurso = percurso;
+        this.empresa = empresa;
     }
 
     public List<Cota> getCotas() {

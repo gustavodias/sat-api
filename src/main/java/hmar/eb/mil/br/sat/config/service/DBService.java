@@ -28,20 +28,20 @@ public class DBService {
     public void instaciaBaseDeDados() {
 
 
-        Empresa emp1 = new Empresa("MOBI PE");
-        Empresa emp2 = new Empresa("RODOTUR");
-        Empresa emp3 = new Empresa("TRANSCOL");
+        var emp1 = new Empresa("MOBI PE");
+        var emp2 = new Empresa("RODOTUR");
+        var emp3 = new Empresa("TRANSCOL");
 
         Passagem pas1 = new Passagem("A", new BigDecimal("3.75"));
         Passagem pas2 = new Passagem("B", new BigDecimal("5.10"));
         Passagem pas3 = new Passagem("G", new BigDecimal("2.45"));
 
         Pessoa pes1 = new Pessoa("MILITAR", "SGT EP", "ALPHA", 2017, new BigInteger("123456789100"), "GUSTAVO EMERSON F. DIAS",
-                "DIAS", "Rua 25", "CAMARAGIBE/RECIFE");
+                "DIAS", "Rua 25", "CAMARAGIBE/RECIFE",emp2);
         Pessoa pes2 = new Pessoa("CIVIL", "SD EP", "BRAVO", 2018, new BigInteger("123456789900"), "JOÃO TESTER",
-                "TESTER", "Rua 27", "OLINDA/RECIFE");
+                "TESTER", "Rua 27", "OLINDA/RECIFE", emp1);
         Pessoa pes3 = new Pessoa("MILITAR", "CP EP", "ALPHA", 2019, new BigInteger("123456789800"), "PEDRO TESTER DIAS",
-                "PEDRO", "Rua 25", "RECIFE/RECIFE");
+                "PEDRO", "Rua 25", "RECIFE/RECIFE",emp3);
 
         Cota cota1 = new Cota("SD EP", new BigDecimal("20"), pes2);
         Cota cota2 = new Cota("CB EP", new BigDecimal("30"), pes3);

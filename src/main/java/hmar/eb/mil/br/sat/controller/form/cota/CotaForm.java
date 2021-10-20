@@ -1,7 +1,6 @@
-package hmar.eb.mil.br.sat.controller.form;
+package hmar.eb.mil.br.sat.controller.form.cota;
 
 import hmar.eb.mil.br.sat.modelo.Cota;
-import hmar.eb.mil.br.sat.modelo.Pessoa;
 import hmar.eb.mil.br.sat.repository.PessoaRepository;
 
 import javax.validation.constraints.NotEmpty;
@@ -17,7 +16,7 @@ public class CotaForm {
     private Long codPessoa;
 
     public Cota converter(PessoaRepository pessoaRepository){
-        Pessoa pessoa = pessoaRepository.getById(codPessoa);
+        var pessoa = pessoaRepository.getById(codPessoa);
         return new Cota(graduacao, valor, pessoa);
     }
 
