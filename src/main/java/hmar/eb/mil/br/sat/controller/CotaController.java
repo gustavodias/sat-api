@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/cota")
+@RequestMapping("/cotas")
 public class CotaController {
 
     @Autowired
@@ -46,7 +46,7 @@ public class CotaController {
 
     @PostMapping
     @Transactional
-    @CacheEvict(value = "listaDeCotas")
+    @CacheEvict(value = "listaDeCotas", allEntries = true)
     public ResponseEntity<CotaDto> cadastrar(@RequestBody @Valid CotaForm cotaForm, UriComponentsBuilder uriBuilder){
             Cota cota = cotaForm.converter(pessoaRepository);
             cotaRepository.save(cota);

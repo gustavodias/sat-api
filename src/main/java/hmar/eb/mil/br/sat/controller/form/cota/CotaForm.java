@@ -1,7 +1,6 @@
 package hmar.eb.mil.br.sat.controller.form.cota;
 
 import hmar.eb.mil.br.sat.modelo.Cota;
-import hmar.eb.mil.br.sat.modelo.Pessoa;
 import hmar.eb.mil.br.sat.repository.PessoaRepository;
 
 import javax.validation.constraints.NotEmpty;
