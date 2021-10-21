@@ -1,6 +1,7 @@
 package hmar.eb.mil.br.sat.controller;
 
 import hmar.eb.mil.br.sat.controller.dto.EmpresaDto;
+import hmar.eb.mil.br.sat.controller.form.empresa.EmpresaForm;
 import hmar.eb.mil.br.sat.modelo.Empresa;
 import hmar.eb.mil.br.sat.repository.EmpresaRepository;
 import hmar.eb.mil.br.sat.repository.PessoaRepository;
@@ -14,6 +15,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/empresas")
@@ -37,6 +42,17 @@ public class EmpresaController {
             Page<Empresa> empresas = empresaRepository.findByNome(nome, paginacao);
             return EmpresaDto.converter(empresas);
         }
+    }
+
+    @PostMapping
+    @Transactional
+    @CacheEvict(value = "listaDeEmpresas", allEntries = true)
+    public ResponseEntity<EmpresaDto> cadastrar(@RequestBody @Valid EmpresaForm empresaForm, UriComponentsBuilder uriComponentsBuilder){
+        Empresa empresa = empresaForm.converter();
+        empresaRepository.save(empresa);
+
+        URI uri = uriComponentsBuilder.path("/{cod}").buildAndExpand(empresa.getCod()).toUri();
+        return ResponseEntity.created(uri).body(new EmpresaDto(empresa));
     }
 
     @DeleteMapping("/{cod}")
