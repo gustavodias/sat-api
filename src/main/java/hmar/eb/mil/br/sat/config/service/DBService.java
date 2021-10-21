@@ -27,7 +27,6 @@ public class DBService {
 
     public void instaciaBaseDeDados() {
 
-
         var emp1 = new Empresa("MOBI PE");
         var emp2 = new Empresa("RODOTUR");
         var emp3 = new Empresa("TRANSCOL");
@@ -47,7 +46,6 @@ public class DBService {
         Cota cota2 = new Cota("CB EP", new BigDecimal("30"), pes3);
         Cota cota3 = new Cota("SGT EP", new BigDecimal("40"), pes1);
 
-
         Trajeto tr1 = new Trajeto("Rua x/Rua Y", pes1, pas1);
         Trajeto tr2 = new Trajeto("Rua y/Rua z", pes1, pas1);
         Trajeto tr3 = new Trajeto("Rua a/Rua b", pes2, pas1);
@@ -65,7 +63,6 @@ public class DBService {
         pes1.getTrajetos().addAll(Arrays.asList(tr1,tr2));
         pes2.getTrajetos().addAll(Arrays.asList(tr3,tr4,tr5));
         pes3.getTrajetos().addAll(Arrays.asList(tr6,tr7,tr8,tr9));
-
 
         this.empresaRepository.saveAll(Arrays.asList(emp1, emp2, emp3));
         this.passagemRepository.saveAll(Arrays.asList(pas1, pas2, pas3));

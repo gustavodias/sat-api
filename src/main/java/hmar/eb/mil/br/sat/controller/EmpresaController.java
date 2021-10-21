@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/empresas")
@@ -28,14 +27,11 @@ public class EmpresaController {
     @Autowired
     private EmpresaRepository empresaRepository;
 
-    @Autowired
-    private PessoaRepository pessoaRepository;
-
     @GetMapping
     @Transactional
     @Cacheable(value = "listaDeEmpresas")
     public Page<EmpresaDto> listar(@RequestParam(required = false) String nome,
-                                             @PageableDefault(sort = "nome", direction = Sort.Direction.DESC, page = 0, size = 10) Pageable paginacao){
+                                   @PageableDefault(sort = "nome", direction = Sort.Direction.DESC, page = 0, size = 10) Pageable paginacao){
         if (nome == null){
             Page<Empresa> empresas = empresaRepository.findAll(paginacao);
             return EmpresaDto.converter(empresas);
@@ -49,10 +45,10 @@ public class EmpresaController {
     @Transactional
     @CacheEvict(value = "listaDeEmpresas", allEntries = true)
     public ResponseEntity<EmpresaDto> cadastrar(@RequestBody @Valid EmpresaForm empresaForm, UriComponentsBuilder uriComponentsBuilder){
-        Empresa empresa = empresaForm.converter();
+        var empresa = empresaForm.converter();
         empresaRepository.save(empresa);
 
-        URI uri = uriComponentsBuilder.path("/{cod}").buildAndExpand(empresa.getCod()).toUri();
+        var uri = uriComponentsBuilder.path("/{cod}").buildAndExpand(empresa.getCod()).toUri();
         return ResponseEntity.created(uri).body(new EmpresaDto(empresa));
     }
 
@@ -81,5 +77,5 @@ public class EmpresaController {
         }
         return ResponseEntity.notFound().build();
     }
-    
+
 }
