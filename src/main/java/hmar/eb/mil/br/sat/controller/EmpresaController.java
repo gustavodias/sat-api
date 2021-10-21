@@ -1,6 +1,7 @@
 package hmar.eb.mil.br.sat.controller;
 
 import hmar.eb.mil.br.sat.controller.dto.EmpresaDto;
+import hmar.eb.mil.br.sat.controller.form.empresa.AtualizarEmpresaForm;
 import hmar.eb.mil.br.sat.controller.form.empresa.EmpresaForm;
 import hmar.eb.mil.br.sat.modelo.Empresa;
 import hmar.eb.mil.br.sat.repository.EmpresaRepository;
@@ -55,6 +56,19 @@ public class EmpresaController {
         return ResponseEntity.created(uri).body(new EmpresaDto(empresa));
     }
 
+    @PutMapping("/{cod}")
+    @Transactional
+    @CacheEvict(value = "listaDeEmpresas", allEntries = true)
+    public ResponseEntity<EmpresaDto> atualizar(@PathVariable Long cod, @RequestBody @Valid AtualizarEmpresaForm atualizarEmpresaForm){
+        var optional = empresaRepository.findById(cod);
+
+        if (optional.isPresent()){
+            var empresa = atualizarEmpresaForm.atualizar(cod, empresaRepository);
+            return ResponseEntity.ok(new EmpresaDto(empresa));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @DeleteMapping("/{cod}")
     @Transactional
     @CacheEvict(value = "listaDeEmpresas", allEntries = true)
@@ -67,6 +81,5 @@ public class EmpresaController {
         }
         return ResponseEntity.notFound().build();
     }
-
-
+    
 }

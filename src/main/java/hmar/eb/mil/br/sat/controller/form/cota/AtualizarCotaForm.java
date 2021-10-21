@@ -29,6 +29,7 @@ public class AtualizarCotaForm {
     public BigDecimal getValor() {
         return valor;
     }
+
     public Cota atualizar(Long cod, CotaRepository cotaRepository){
         var cota = cotaRepository.getById(cod);
         cota.setGraduacao(this.graduacao);

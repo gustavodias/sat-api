@@ -60,7 +60,7 @@ public class CotaController {
     @CacheEvict(value = "listaDeCotas", allEntries = true)
     public ResponseEntity<CotaDto> atualizar(@PathVariable Long cod, @RequestBody @Valid AtualizarCotaForm atualizarCotaForm){
         var optional = cotaRepository.findById(cod);
-        System.out.println("passou" + cod);
+
         if (optional.isPresent()){
             var cota = atualizarCotaForm.atualizar(cod, cotaRepository);
             return ResponseEntity.ok(new CotaDto(cota));
