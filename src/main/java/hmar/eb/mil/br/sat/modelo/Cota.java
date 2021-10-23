@@ -3,7 +3,10 @@ package hmar.eb.mil.br.sat.modelo;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Cota {
@@ -11,30 +14,36 @@ public class Cota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cod;
-    private String graduacao;
     private BigDecimal valor;
     private LocalDateTime data = LocalDateTime.now();
-
     @ManyToOne
-    private Pessoa pessoa;
+    private Graduacao graduacao;
+    @ManyToMany
+    @JoinTable(
+            name = "CotaPessoa",
+            uniqueConstraints = @UniqueConstraint(columnNames = {"cod_pessoa", "cod_cota"}),
+            joinColumns = @JoinColumn(name = "cod_cota"),
+            inverseJoinColumns = @JoinColumn(name = "cod_pessoa")
+    )
+    private List<Pessoa> pessoa = new ArrayList<>();
 
     public Cota() {
         super();
     }
 
-    public Cota(String graduacao, BigDecimal valor, Pessoa pessoa) {
-        this.graduacao = graduacao;
-        this.valor = valor;
-        this.pessoa = pessoa;
-    }
-
-    public Pessoa getPessoa() {
+    public List<Pessoa> getPessoa() {
         return pessoa;
     }
 
-    public void setPessoa(Pessoa pessoa) {
+    public void setPessoa(List<Pessoa> pessoa) {
         this.pessoa = pessoa;
     }
+
+    public Cota(Graduacao graduacao, BigDecimal valor) {
+        this.graduacao = graduacao;
+        this.valor = valor;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -49,20 +58,20 @@ public class Cota {
         return Objects.hash(cod, graduacao, valor, data);
     }
 
+    public Graduacao getGraduacao() {
+        return graduacao;
+    }
+
+    public void setGraduacao(Graduacao graduacao) {
+        this.graduacao = graduacao;
+    }
+
     public Long getCod() {
         return cod;
     }
 
     public void setCod(Long cod) {
         this.cod = cod;
-    }
-
-    public String getGraduacao() {
-        return graduacao;
-    }
-
-    public void setGraduacao(String graduacao) {
-        this.graduacao = graduacao;
     }
 
     public BigDecimal getValor() {

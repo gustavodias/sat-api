@@ -3,8 +3,12 @@ package hmar.eb.mil.br.sat.controller;
 import hmar.eb.mil.br.sat.controller.dto.CotaDto;
 import hmar.eb.mil.br.sat.controller.form.cota.AtualizarCotaForm;
 import hmar.eb.mil.br.sat.controller.form.cota.CotaForm;
+import hmar.eb.mil.br.sat.controller.form.cota.CotaPessoaForm;
 import hmar.eb.mil.br.sat.modelo.Cota;
+import hmar.eb.mil.br.sat.modelo.Graduacao;
+import hmar.eb.mil.br.sat.modelo.Pessoa;
 import hmar.eb.mil.br.sat.repository.CotaRepository;
+import hmar.eb.mil.br.sat.repository.GraduacaoRepository;
 import hmar.eb.mil.br.sat.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.net.URI;
 
 @RestController
@@ -30,6 +35,9 @@ public class CotaController {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+
+    @Autowired
+    private GraduacaoRepository graduacaoRepository;
 
     @GetMapping
     @Cacheable(value = "listaDeCotas")
@@ -48,11 +56,21 @@ public class CotaController {
     @Transactional
     @CacheEvict(value = "listaDeCotas", allEntries = true)
     public ResponseEntity<CotaDto> cadastrar(@RequestBody @Valid CotaForm cotaForm, UriComponentsBuilder uriBuilder){
-            Cota cota = cotaForm.converter(pessoaRepository);
+            Cota cota = cotaForm.converter(pessoaRepository, graduacaoRepository);
+
             cotaRepository.save(cota);
 
-        URI uri = uriBuilder.path("/{id}").buildAndExpand(cota.getCod()).toUri();
+        URI uri = uriBuilder.path("/{cod}").buildAndExpand(cota.getCod()).toUri();
         return ResponseEntity.created(uri).body(new CotaDto(cota));
+    }
+
+    @PostMapping("/associarCotaPessoa")
+    @Transactional
+    @CacheEvict(value = "listaDeCotas", allEntries = true)
+    public ResponseEntity<Void> associarCotaPessoa(@RequestBody @Valid CotaPessoaForm cotaPessoaForm){
+        Cota cota = cotaPessoaForm.converter(pessoaRepository, cotaRepository);
+        cotaRepository.save(cota);
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{cod}")

@@ -16,7 +16,7 @@ public class CotaDto {
 
     public CotaDto(Cota cota) {
         this.cod = cota.getCod();
-        this.graduacao = cota.getGraduacao();
+       /* this.graduacao = cota.getGraduacao();*/
         this.valor = cota.getValor();
         this.data = cota.getData();
     }

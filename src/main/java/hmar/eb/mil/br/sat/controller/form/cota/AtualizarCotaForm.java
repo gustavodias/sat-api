@@ -32,7 +32,7 @@ public class AtualizarCotaForm {
 
     public Cota atualizar(Long cod, CotaRepository cotaRepository){
         var cota = cotaRepository.getById(cod);
-        cota.setGraduacao(this.graduacao);
+        /*cota.setGraduacao(this.graduacao);*/
         cota.setValor(this.valor);
         return cota;
     }

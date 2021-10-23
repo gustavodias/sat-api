@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Pessoa {
@@ -13,7 +14,6 @@ public class Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cod;
     private String tipo;
-    private String graduacao;
     private String turma;
     private Integer ano;
     private BigInteger preccp;
@@ -22,19 +22,22 @@ public class Pessoa {
     private String endereco;
     private String percurso;
     @ManyToOne
+    private Graduacao graduacao;
+    @ManyToOne
     private Empresa empresa;
-    @OneToMany(mappedBy = "pessoa")
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "CotaPessoa",
+            uniqueConstraints = @UniqueConstraint(columnNames = {"cod_pessoa", "cod_cota"}),
+            joinColumns = @JoinColumn(name = "cod_pessoa"),
+            inverseJoinColumns = @JoinColumn(name = "cod_cota")
+    )
     private List<Cota> cotas = new ArrayList<>();
     @OneToMany(mappedBy = "pessoa")
     private List<Trajeto> trajetos = new ArrayList<>();
 
-    public Pessoa() {
-        super();
-    }
-
-    public Pessoa(String tipo, String graduacao, String turma, Integer ano, BigInteger preccp, String nome, String nomeGuerra, String endereco, String percurso, Empresa empresa) {
+    public Pessoa(String tipo, String turma, Integer ano, BigInteger preccp, String nome, String nomeGuerra, String endereco, String percurso, Graduacao graduacao, Empresa empresa) {
         this.tipo = tipo;
-        this.graduacao = graduacao;
         this.turma = turma;
         this.ano = ano;
         this.preccp = preccp;
@@ -42,6 +45,7 @@ public class Pessoa {
         this.nomeGuerra = nomeGuerra;
         this.endereco = endereco;
         this.percurso = percurso;
+        this.graduacao = graduacao;
         this.empresa = empresa;
     }
 
@@ -66,12 +70,32 @@ public class Pessoa {
         if (this == o) return true;
         if (!(o instanceof Pessoa)) return false;
         Pessoa pessoa = (Pessoa) o;
-        return Objects.equals(cod, pessoa.cod) && Objects.equals(tipo, pessoa.tipo) && Objects.equals(graduacao, pessoa.graduacao) && Objects.equals(turma, pessoa.turma) && Objects.equals(ano, pessoa.ano) && Objects.equals(preccp, pessoa.preccp) && Objects.equals(nome, pessoa.nome) && Objects.equals(nomeGuerra, pessoa.nomeGuerra) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(percurso, pessoa.percurso);
+        return Objects.equals(cod, pessoa.cod) && Objects.equals(tipo, pessoa.tipo) && Objects.equals(turma, pessoa.turma) && Objects.equals(ano, pessoa.ano) && Objects.equals(preccp, pessoa.preccp) && Objects.equals(nome, pessoa.nome) && Objects.equals(nomeGuerra, pessoa.nomeGuerra) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(percurso, pessoa.percurso);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cod, tipo, graduacao, turma, ano, preccp, nome, nomeGuerra, endereco, percurso);
+        return Objects.hash(cod, tipo, turma, ano, preccp, nome, nomeGuerra, endereco, percurso);
+    }
+
+    public Graduacao getGraduacao() {
+        return graduacao;
+    }
+
+    public void setGraduacao(Graduacao graduacao) {
+        this.graduacao = graduacao;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public Pessoa() {
+        super();
     }
 
     public Long getCod() {
@@ -88,14 +112,6 @@ public class Pessoa {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public String getGraduacao() {
-        return graduacao;
-    }
-
-    public void setGraduacao(String graduacao) {
-        this.graduacao = graduacao;
     }
 
     public String getTurma() {
