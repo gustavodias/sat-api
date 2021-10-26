@@ -1,6 +1,7 @@
 package hmar.eb.mil.br.sat.controller;
 
 import hmar.eb.mil.br.sat.controller.dto.CotaDto;
+import hmar.eb.mil.br.sat.controller.dto.CotaPessoaDto;
 import hmar.eb.mil.br.sat.controller.dto.PessoaDto;
 import hmar.eb.mil.br.sat.controller.form.cota.AtualizarCotaForm;
 import hmar.eb.mil.br.sat.controller.form.cota.CotaForm;
@@ -60,6 +61,13 @@ public class CotaController {
 
         return ResponseEntity.ok().body(cotaRepository.findById(cod).orElse(new Cota()).
                 getPessoa().stream().map(pessoa -> new PessoaDto(pessoa.getNome())).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/listaDetalhada2")
+    @Cacheable(value = "listaDetalhada")
+    public ResponseEntity<List<CotaPessoaDto>> listar3(@RequestParam(required = false) Long cod){
+        return ResponseEntity.ok().body(cotaRepository.findById(cod).orElse(new Cota()).
+                getPessoa().stream().map(pessoa -> new CotaPessoaDto(pessoa.getCotas().stream().map(CotaDto::new).collect(Collectors.toList()), pessoa.getGraduacao().getCod(), pessoa.getCod())).collect(Collectors.toList()));
     }
 
     @PostMapping

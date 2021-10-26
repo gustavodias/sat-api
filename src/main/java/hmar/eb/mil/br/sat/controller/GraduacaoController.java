@@ -68,7 +68,7 @@ public class GraduacaoController {
     @CacheEvict(value = "listaDeGraduacoes", allEntries = true)
     public ResponseEntity<Void> deletar(@PathVariable Long cod){
         var optional = graduacaoRepository.findById(cod);
-        
+
         if (optional.isPresent()){
             graduacaoRepository.deleteById(cod);
             return ResponseEntity.ok().build();

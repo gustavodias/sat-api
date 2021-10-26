@@ -12,6 +12,9 @@ public class CotaDto {
     private BigDecimal valor;
     private LocalDateTime data;
 
+    public CotaDto(Long cod) {
+        this.cod = cod;
+    }
 
     public CotaDto(Cota cota) {
         this.cod = cota.getCod();
