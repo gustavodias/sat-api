@@ -50,7 +50,6 @@ public class DBService {
         Cota cota3 = new Cota(grad1, new BigDecimal("40"));
         Cota cota4 = new Cota(grad5, new BigDecimal("40"));
 
-
         Pessoa pes1 = new Pessoa("MILITAR", "ALPHA", 2017, new BigInteger("123456789100"), "GUSTAVO EMERSON F. DIAS",
                 "DIAS", "Rua 25", "CAMARAGIBE/RECIFE", grad1, emp2);
         Pessoa pes2 = new Pessoa("CIVIL", "BRAVO", 2018, new BigInteger("123456789900"), "JOÃO TESTER",
@@ -72,8 +71,6 @@ public class DBService {
         Pessoa pes10 = new Pessoa("MILITAR", "ALPHA", 2019, new BigInteger("123456789800"), "PEDRO TESTER DIAS",
                 "MATHEUS", "Rua 25", "RECIFE/RECIFE", grad2, emp3);
 
-
-
         Trajeto tr1 = new Trajeto("Rua x/Rua Y", pes1, pas1);
         Trajeto tr2 = new Trajeto("Rua y/Rua z", pes1, pas1);
         Trajeto tr3 = new Trajeto("Rua a/Rua b", pes2, pas1);
@@ -83,24 +80,6 @@ public class DBService {
         Trajeto tr7 = new Trajeto("Rua j/Rua k", pes3, pas1);
         Trajeto tr8 = new Trajeto("Rua k/Rua l", pes3, pas1);
         Trajeto tr9 = new Trajeto("Rua l/Rua Y", pes3, pas1);
-
-
-
-
-
-       /* pes1.getCotas().add(cota1);
-        cota1.getPessoa().add(pes1);*/
-
-        /*pes2.getCotas().addAll(Arrays.asList(cota1));
-        pes3.getCotas().addAll(Arrays.asList(cota2));
-        pes4.getCotas().addAll(Arrays.asList(cota2));
-        pes5.getCotas().addAll(Arrays.asList(cota3));
-        pes6.getCotas().addAll(Arrays.asList(cota4));
-        pes7.getCotas().addAll(Arrays.asList(cota3));
-        pes8.getCotas().addAll(Arrays.asList(cota1));
-        pes9.getCotas().addAll(Arrays.asList(cota2));
-        pes10.getCotas().addAll(Arrays.asList(cota2));*/
-
 
         pes1.getTrajetos().addAll(Arrays.asList(tr1, tr2));
         pes2.getTrajetos().addAll(Arrays.asList(tr3, tr4, tr5));

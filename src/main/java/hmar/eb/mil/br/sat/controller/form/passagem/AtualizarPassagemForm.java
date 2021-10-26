@@ -31,7 +31,7 @@ public class AtualizarPassagemForm {
         this.valor = valor;
     }
 
-    private Passagem atualizar(Long cod, PassagemRepository passagemRepository){
+    public Passagem atualizar(Long cod, PassagemRepository passagemRepository){
         var passagem = passagemRepository.getById(cod);
         passagem.setTarifa(this.tarifa);
         passagem.setValor(this.valor);

@@ -1,11 +1,11 @@
 package hmar.eb.mil.br.sat.controller;
 
 import hmar.eb.mil.br.sat.controller.dto.CotaDto;
+import hmar.eb.mil.br.sat.controller.dto.PessoaDto;
 import hmar.eb.mil.br.sat.controller.form.cota.AtualizarCotaForm;
 import hmar.eb.mil.br.sat.controller.form.cota.CotaForm;
 import hmar.eb.mil.br.sat.controller.form.cota.CotaPessoaForm;
 import hmar.eb.mil.br.sat.modelo.Cota;
-import hmar.eb.mil.br.sat.modelo.Graduacao;
 import hmar.eb.mil.br.sat.modelo.Pessoa;
 import hmar.eb.mil.br.sat.repository.CotaRepository;
 import hmar.eb.mil.br.sat.repository.GraduacaoRepository;
@@ -21,10 +21,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cotas")
@@ -50,6 +52,14 @@ public class CotaController {
             Page<Cota> cotas = cotaRepository.findByGraduacao(graduacao, paginacao);
             return CotaDto.converter(cotas);
         }
+    }
+
+    @GetMapping("/listaDetalhada")
+    @Cacheable(value = "listaDetalhada")
+    public ResponseEntity<List<PessoaDto>> listar2(@RequestParam(required = false) Long cod){
+
+        return ResponseEntity.ok().body(cotaRepository.findById(cod).orElse(new Cota()).
+                getPessoa().stream().map(pessoa -> new PessoaDto(pessoa.getNome())).collect(Collectors.toList()));
     }
 
     @PostMapping

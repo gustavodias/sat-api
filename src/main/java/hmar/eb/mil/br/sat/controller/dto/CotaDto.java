@@ -9,14 +9,12 @@ import java.time.LocalDateTime;
 public class CotaDto {
 
     private Long cod;
-    private String graduacao;
     private BigDecimal valor;
     private LocalDateTime data;
 
 
     public CotaDto(Cota cota) {
         this.cod = cota.getCod();
-       /* this.graduacao = cota.getGraduacao();*/
         this.valor = cota.getValor();
         this.data = cota.getData();
     }
@@ -31,14 +29,6 @@ public class CotaDto {
 
     public void setCod(Long cod) {
         this.cod = cod;
-    }
-
-    public String getGraduacao() {
-        return graduacao;
-    }
-
-    public void setGraduacao(String graduacao) {
-        this.graduacao = graduacao;
     }
 
     public BigDecimal getValor() {
