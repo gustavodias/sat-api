@@ -1,6 +1,5 @@
 package hmar.eb.mil.br.sat.controller.dto;
 
-import hmar.eb.mil.br.sat.modelo.Graduacao;
 import hmar.eb.mil.br.sat.modelo.Pessoa;
 import org.springframework.data.domain.Page;
 

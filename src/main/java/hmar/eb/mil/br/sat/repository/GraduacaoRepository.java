@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GraduacaoRepository extends JpaRepository<Graduacao, Long> {
+    Graduacao getByPosto(String posto);
 }

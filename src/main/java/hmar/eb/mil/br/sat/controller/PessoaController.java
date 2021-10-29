@@ -3,7 +3,7 @@ package hmar.eb.mil.br.sat.controller;
 import hmar.eb.mil.br.sat.controller.dto.PessoaDto;
 import hmar.eb.mil.br.sat.controller.form.pessoa.AtualizarPessoaForm;
 import hmar.eb.mil.br.sat.controller.form.pessoa.PessoaForm;
-import hmar.eb.mil.br.sat.modelo.Pessoa;
+import hmar.eb.mil.br.sat.repository.CotaRepository;
 import hmar.eb.mil.br.sat.repository.EmpresaRepository;
 import hmar.eb.mil.br.sat.repository.GraduacaoRepository;
 import hmar.eb.mil.br.sat.repository.PessoaRepository;
@@ -31,6 +31,8 @@ public class PessoaController {
     private GraduacaoRepository graduacaoRepository;
     @Autowired
     private EmpresaRepository empresaRepository;
+    @Autowired
+    private CotaRepository cotaRepository;
 
     @GetMapping
     @Cacheable(value = "listaDePessoas")
@@ -45,6 +47,7 @@ public class PessoaController {
             return PessoaDto.converter(pessoa);
         }
     }
+    
 
     @PostMapping
     @Transactional
