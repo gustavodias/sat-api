@@ -2,37 +2,27 @@ package hmar.eb.mil.br.sat.controller.form.cota;
 
 import hmar.eb.mil.br.sat.modelo.Cota;
 import hmar.eb.mil.br.sat.repository.GraduacaoRepository;
-import hmar.eb.mil.br.sat.repository.PessoaRepository;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class CotaForm {
     @NotNull
-    private Long codGraduacao;
-    @NotNull
     private BigDecimal valor;
-    @NotNull
-    private Long codPessoa;
+    @NotNull @NotEmpty
+    private String gradPosto;
 
-    public Cota converter(PessoaRepository pessoaRepository, GraduacaoRepository graduacaoRepository){
-        var pessoa = pessoaRepository.getById(codPessoa);
-        var graduacao = graduacaoRepository.getById(codGraduacao);
-
-        var cota = new Cota(graduacao,valor);
-        cota.getPessoa().add(pessoa);
-        return cota;
+    public Cota converter(GraduacaoRepository graduacaoRepository) {
+        var graduacao = graduacaoRepository.getByPosto(gradPosto);
+        return new Cota(valor, graduacao);
     }
 
-    public Long getCodGraduacao() {
-        return codGraduacao;
+    public String getGradPosto() {
+        return gradPosto;
     }
 
     public BigDecimal getValor() {
         return valor;
-    }
-
-    public Long getCodPessoa() {
-        return codPessoa;
     }
 }

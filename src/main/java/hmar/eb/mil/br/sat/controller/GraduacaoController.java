@@ -4,6 +4,7 @@ import hmar.eb.mil.br.sat.controller.dto.GraduacaoDto;
 import hmar.eb.mil.br.sat.controller.form.graduacao.AtualizarGraduacaoForm;
 import hmar.eb.mil.br.sat.controller.form.graduacao.GraduacaoForm;
 import hmar.eb.mil.br.sat.controller.form.passagem.AtualizarPassagemForm;
+import hmar.eb.mil.br.sat.modelo.Empresa;
 import hmar.eb.mil.br.sat.modelo.Graduacao;
 import hmar.eb.mil.br.sat.repository.GraduacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/graduacao")
 public class GraduacaoController {
@@ -33,9 +34,15 @@ public class GraduacaoController {
     @GetMapping
     @Transactional
     @Cacheable(value = "listaDeGraduacoes")
-    public Page<GraduacaoDto> listar(@PageableDefault (sort = "posto", direction = Sort.Direction.ASC, size = 10, page = 0)Pageable pageable){
+    public Page<GraduacaoDto> listar(@PageableDefault (sort = "cod", direction = Sort.Direction.ASC, size = 10, page = 0)Pageable pageable){
         Page<Graduacao> graduacao = graduacaoRepository.findAll(pageable);
         return GraduacaoDto.converter(graduacao);
+    }
+
+    @GetMapping(value = "/{cod}")
+    public ResponseEntity<Graduacao> findByCod(@PathVariable Long cod){
+        Graduacao obj = graduacaoRepository.findByCod(cod);
+        return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping

@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/empresas")
 public class EmpresaController {
@@ -28,6 +31,21 @@ public class EmpresaController {
     private EmpresaRepository empresaRepository;
 
     @GetMapping
+    @Transactional
+    //@Cacheable(value = "listaDeEmpresas")
+    public ResponseEntity<List<EmpresaDto>> listar(){
+            List<Empresa> list = empresaRepository.findAll();
+            List<EmpresaDto> listDto = list.stream().map(EmpresaDto::new).collect(Collectors.toList());
+            return ResponseEntity.ok().body(listDto);
+    }
+
+    @GetMapping(value = "/{cod}")
+    public ResponseEntity<Empresa> findByCod(@PathVariable Long cod){
+        Empresa obj = empresaRepository.findByCod(cod);
+        return ResponseEntity.ok().body(obj);
+    }
+
+    /*@GetMapping
     @Transactional
     @Cacheable(value = "listaDeEmpresas")
     public Page<EmpresaDto> listar(@RequestParam(required = false) String nome,
@@ -39,11 +57,11 @@ public class EmpresaController {
             Page<Empresa> empresas = empresaRepository.findByNome(nome, paginacao);
             return EmpresaDto.converter(empresas);
         }
-    }
+    }*/
 
     @PostMapping
     @Transactional
-    @CacheEvict(value = "listaDeEmpresas", allEntries = true)
+    //@CacheEvict(value = "listaDeEmpresas", allEntries = true)
     public ResponseEntity<EmpresaDto> cadastrar(@RequestBody @Valid EmpresaForm empresaForm, UriComponentsBuilder uriComponentsBuilder){
         var empresa = empresaForm.converter();
         empresaRepository.save(empresa);

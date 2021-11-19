@@ -10,6 +10,7 @@ public class CotaDto {
 
     private Long cod;
     private BigDecimal valor;
+    private String gradPosto;
     private LocalDateTime data;
 
     public CotaDto(Long cod) {
@@ -18,12 +19,21 @@ public class CotaDto {
 
     public CotaDto(Cota cota) {
         this.cod = cota.getCod();
+        this.gradPosto = cota.getGraduacao().getPosto();
         this.valor = cota.getValor();
         this.data = cota.getData();
     }
 
     public static Page<CotaDto> converter(Page<Cota> cotas) {
         return cotas.map(CotaDto::new);
+    }
+
+    public String getGradPosto() {
+        return gradPosto;
+    }
+
+    public void setGradPosto(String gradPosto) {
+        this.gradPosto = gradPosto;
     }
 
     public Long getCod() {

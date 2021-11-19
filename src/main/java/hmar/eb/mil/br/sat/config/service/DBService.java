@@ -45,10 +45,10 @@ public class DBService {
         Passagem pas2 = new Passagem("B", new BigDecimal("5.10"));
         Passagem pas3 = new Passagem("G", new BigDecimal("2.45"));
 
-        Cota cota1 = new Cota(grad1, new BigDecimal("20"));
-        Cota cota2 = new Cota(grad2, new BigDecimal("30"));
-        Cota cota3 = new Cota(grad1, new BigDecimal("40"));
-        Cota cota4 = new Cota(grad5, new BigDecimal("40"));
+        Cota cota1 = new Cota(new BigDecimal("20"), grad1);
+        Cota cota2 = new Cota(new BigDecimal("30"), grad2);
+        Cota cota3 = new Cota(new BigDecimal("40"), grad5);
+        Cota cota4 = new Cota(new BigDecimal("40"), grad6);
 
         Pessoa pes1 = new Pessoa("MILITAR", "ALPHA", 2017, new BigInteger("123456789100"), "GUSTAVO EMERSON F. DIAS",
                 "DIAS", "Rua 25", "CAMARAGIBE/RECIFE", grad1, emp2);

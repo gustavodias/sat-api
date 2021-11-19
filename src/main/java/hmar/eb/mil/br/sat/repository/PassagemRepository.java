@@ -11,4 +11,5 @@ public interface PassagemRepository extends JpaRepository<Passagem, Long> {
 
     Page<Passagem> findByTarifa(String tarifa, Pageable paginacao);
 
+    Passagem findByCod(Long cod);
 }

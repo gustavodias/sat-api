@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
     Page<Empresa> findByNome(String nome, Pageable paginacao);
+
+    Empresa findByCod(Long cod);
 }

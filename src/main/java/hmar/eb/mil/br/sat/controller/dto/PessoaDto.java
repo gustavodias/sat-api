@@ -1,5 +1,7 @@
 package hmar.eb.mil.br.sat.controller.dto;
 
+import hmar.eb.mil.br.sat.modelo.Empresa;
+import hmar.eb.mil.br.sat.modelo.Graduacao;
 import hmar.eb.mil.br.sat.modelo.Pessoa;
 import org.springframework.data.domain.Page;
 
@@ -17,6 +19,8 @@ public class PessoaDto {
     private String nomeGuerra;
     private String endereco;
     private String percurso;
+    private Graduacao graduacao;
+    private Empresa empresa;
 
     public PessoaDto(String nome) {
         this.nome = nome;
@@ -33,6 +37,8 @@ public class PessoaDto {
         this.nomeGuerra = pessoa.getNomeGuerra();
         this.endereco = pessoa.getEndereco();
         this.percurso = pessoa.getPercurso();
+        this.graduacao = pessoa.getGraduacao();
+        this.empresa = pessoa.getEmpresa();
     }
 
     public static Page<PessoaDto> converter(Page<Pessoa> pessoa) {
@@ -45,6 +51,22 @@ public class PessoaDto {
 
     public void setCod(Long cod) {
         this.cod = cod;
+    }
+
+    public Graduacao getGraduacao() {
+        return graduacao;
+    }
+
+    public void setGraduacao(Graduacao graduacao) {
+        this.graduacao = graduacao;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
     public String getTipo() {

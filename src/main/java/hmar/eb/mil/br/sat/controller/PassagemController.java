@@ -3,6 +3,7 @@ package hmar.eb.mil.br.sat.controller;
 import hmar.eb.mil.br.sat.controller.dto.PassagemDto;
 import hmar.eb.mil.br.sat.controller.form.passagem.AtualizarPassagemForm;
 import hmar.eb.mil.br.sat.controller.form.passagem.PassagemForm;
+import hmar.eb.mil.br.sat.modelo.Graduacao;
 import hmar.eb.mil.br.sat.modelo.Passagem;
 import hmar.eb.mil.br.sat.repository.PassagemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/passagens")
 public class PassagemController {
@@ -30,8 +32,8 @@ public class PassagemController {
     @Transactional
     @Cacheable(value = "listaDePassagens")
     public Page<PassagemDto> listar(@RequestParam(required = false) String tarifa,
-                                   @PageableDefault(sort = "tarifa", direction = Sort.Direction.ASC, page = 0, size = 10) Pageable paginacao){
-        if (tarifa == null){
+                                    @PageableDefault(sort = "tarifa", direction = Sort.Direction.ASC, page = 0, size = 10) Pageable paginacao) {
+        if (tarifa == null) {
             Page<Passagem> passagens = passagemRepository.findAll(paginacao);
             return PassagemDto.converter(passagens);
         } else {
@@ -40,10 +42,17 @@ public class PassagemController {
         }
     }
 
+    @GetMapping(value = "/{cod}")
+    @Transactional
+    public ResponseEntity<Passagem> findByCod(@PathVariable Long cod) {
+        Passagem obj = passagemRepository.findByCod(cod);
+        return ResponseEntity.ok().body(obj);
+    }
+
     @PostMapping
     @Transactional
     @CacheEvict(value = "listaDePassagens", allEntries = true)
-    public ResponseEntity<PassagemDto> cadastrar(@RequestBody @Valid PassagemForm passagemForm, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<PassagemDto> cadastrar(@RequestBody @Valid PassagemForm passagemForm, UriComponentsBuilder uriComponentsBuilder) {
         var passagem = passagemForm.converter();
         passagemRepository.save(passagem);
 
@@ -54,13 +63,13 @@ public class PassagemController {
     @PutMapping("/{cod}")
     @Transactional
     @CacheEvict(value = "listaDePassagens", allEntries = true)
-    public ResponseEntity<PassagemDto> atualizar(@PathVariable Long cod, @RequestBody @Valid AtualizarPassagemForm atualizarPassagemForm){
+    public ResponseEntity<PassagemDto> atualizar(@PathVariable Long cod, @RequestBody @Valid AtualizarPassagemForm atualizarPassagemForm) {
         var optional = passagemRepository.findById(cod);
 
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             var passagem = atualizarPassagemForm.atualizar(cod, passagemRepository);
             return ResponseEntity.ok(new PassagemDto(passagem));
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -68,10 +77,10 @@ public class PassagemController {
     @DeleteMapping("/{cod}")
     @Transactional
     @CacheEvict(value = "listaDePassagens", allEntries = true)
-    public ResponseEntity<Void> deletar(@PathVariable Long cod){
+    public ResponseEntity<Void> deletar(@PathVariable Long cod) {
         var optional = passagemRepository.findById(cod);
 
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             passagemRepository.deleteById(cod);
             return ResponseEntity.ok().build();
         }

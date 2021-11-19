@@ -10,29 +10,28 @@ import java.math.BigDecimal;
 public class AtualizarCotaForm {
     @NotNull
     @NotEmpty
-    private String graduacao;
+    private String gradPosto;
     @NotNull
     private BigDecimal valor;
 
-    public void setGraduacao(String graduacao) {
-        this.graduacao = graduacao;
-    }
-
     public void setValor(BigDecimal valor) {
         this.valor = valor;
-    }
-
-    public String getGraduacao() {
-        return graduacao;
     }
 
     public BigDecimal getValor() {
         return valor;
     }
 
+    public String getGradPosto() {
+        return gradPosto;
+    }
+
+    public void setGradPosto(String gradPosto) {
+        this.gradPosto = gradPosto;
+    }
+
     public Cota atualizar(Long cod, CotaRepository cotaRepository){
         var cota = cotaRepository.getById(cod);
-        /*cota.setGraduacao(this.graduacao);*/
         cota.setValor(this.valor);
         return cota;
     }

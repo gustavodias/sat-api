@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Cota {
@@ -37,6 +36,11 @@ public class Cota {
 
     public void setPessoa(List<Pessoa> pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public Cota(BigDecimal valor, Graduacao grad){
+        this.valor = valor;
+        this.graduacao = grad;
     }
 
     public Cota(Graduacao graduacao, BigDecimal valor) {
